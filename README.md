@@ -1,3 +1,3 @@
 ## Computer Infracture
 
-This repostory is for computer infrascture module
+This repostory is for computer infrastructure module
