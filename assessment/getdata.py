@@ -25,7 +25,7 @@ def get_data():
     # Import necessary libraries
     import yfinance as yf
     import pandas as pd
-    from datetime import date, datetime, timezone
+    import datetime as dt
     import os
 
     # get data from yahoo finance
@@ -33,8 +33,8 @@ def get_data():
     df = yf.download(tickers, period="1d", interval="1m")
 
     # get file name to save data in to csv
-    todaydate = date.today().strftime("%Y%m%d")
-    currenttime = datetime.now(timezone.utc).strftime("%H%M%S")
+    todaydate = dt.date.today().strftime("%Y%m%d")
+    currenttime = dt.datetime.now(dt.timezone.utc).strftime("%H%M%S")
     filename = f"{todaydate}-{currenttime}.csv"
     
     # create data folder if not exists
