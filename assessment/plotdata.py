@@ -22,19 +22,53 @@ def plot_data():
     import os
 
     # get latest csv file from data folder
+
+    # get the file location
     data_folder = "./data"
+
+    # list all files in data folder
     files = os.listdir(data_folder)
-    print(f"Files in data folder: {files}")
+    # filer all the files to get only csv files
     csv_files = [f for f in files if f.endswith(".csv")]
+    # get the latest csv file
     latest_file = max(csv_files, key=lambda x: os.path.getctime(os.path.join(data_folder, x)))
-    print(f"Latest file found: {latest_file}")
     latest_file_path = os.path.join(data_folder, latest_file)
 
     # read data from csv file
     df = pd.read_csv(latest_file_path)
-    print("Data read from csv file successfully.")
+
+    # manuplation data for plotting
+    # Create a  meaningful colums 
+    df.columns = df.columns.str.strip() + "_" +  df.iloc[0].str.strip() # remove any leading/trailing whitespace
+    print(df.columns.to_list())
+    df.drop(columns=['High_AAPL', 'High.1_AMZN', 'High.2_GOOG', 'High.3_META', 'High.4_NFLX', 'Low_AAPL', 'Low.1_AMZN', 'Low.2_GOOG', 'Low.3_META', 'Low.4_NFLX', 'Open_AAPL', 'Open.1_AMZN', 'Open.2_GOOG', 'Open.3_META', 'Open.4_NFLX', 'Volume_AAPL', 'Volume.1_AMZN', 'Volume.2_GOOG', 'Volume.3_META', 'Volume.4_NFLX'], inplace=True)
+    df = df.drop(0) 
+    df = df.drop(1)# drop first row
+    print(df)
+
+    # plot data using matplotlib
+    plt.figure(figsize=(10, 6))
+    plt.plot(df['Price_Ticker'], df['Close_AAPL'], label='AAPL')
+    plt.plot(df['Price_Ticker'], df['Close.1_AMZN'], label='AMZN')
+    plt.plot(df['Price_Ticker'], df['Close.2_GOOG'], label='GOOG')
+    plt.plot(df['Price_Ticker'], df['Close.3_META'], label='META')
+    plt.plot(df['Price_Ticker'], df['Close.4_NFLX'], label='NFLX')
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price')
+    plt.title('Stock Closing Prices')
+    plt.legend()
+    plt.grid()
+    
+    # get file name to save plot in to png
+    todaydate = dt.date.today().strftime("%Y%m%d")
+    currenttime = dt.datetime.now(dt.timezone.utc).strftime("%H%M%S")
+    filename = f"{todaydate}-{currenttime}.png"
+
+    # save plot to data folder
+    plt.savefig(os.path.join(data_folder, filename))
+    plt.close()
 
 
 
-# called plot data function
-plot_data()
+# Call plot_data function --- IGNORE ---
+plot_data() 

@@ -44,7 +44,3 @@ def get_data():
     # write data to csv file in data folder
     df.to_csv(f"./data/{filename}")
 
-
-# Call get_data function
-get_data()
-
