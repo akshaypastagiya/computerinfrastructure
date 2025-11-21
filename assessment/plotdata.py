@@ -40,12 +40,17 @@ def plot_data():
     # manuplation data for plotting
     # Create a  meaningful colums 
     df.columns = df.columns.str.strip() + "_" +  df.iloc[0].str.strip() # remove any leading/trailing whitespace
-    print(df.columns.to_list())
+    
     df.drop(columns=['High_AAPL', 'High.1_AMZN', 'High.2_GOOG', 'High.3_META', 'High.4_NFLX', 'Low_AAPL', 'Low.1_AMZN', 'Low.2_GOOG', 'Low.3_META', 'Low.4_NFLX', 'Open_AAPL', 'Open.1_AMZN', 'Open.2_GOOG', 'Open.3_META', 'Open.4_NFLX', 'Volume_AAPL', 'Volume.1_AMZN', 'Volume.2_GOOG', 'Volume.3_META', 'Volume.4_NFLX'], inplace=True)
     df = df.drop(0) 
     df = df.drop(1)# drop first row
-    print(df)
 
+    # convert blank data into 0
+    column_name = df.shape[1]
+    for column_name in df:
+        if column_name != 'Price_Ticker':
+            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
+   
     # plot data using matplotlib
     plt.figure(figsize=(10, 6))
     plt.plot(df['Price_Ticker'], df['Close_AAPL'], label='AAPL')
@@ -67,8 +72,3 @@ def plot_data():
     # save plot to data folder
     plt.savefig(os.path.join(data_folder, filename))
     plt.close()
-
-
-
-# Call plot_data function --- IGNORE ---
-plot_data() 
