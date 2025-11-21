@@ -36,7 +36,6 @@ def plot_data():
 
     # read data from csv file
     df = pd.read_csv(latest_file_path)
-
     # manuplation data for plotting
     # Create a  meaningful colums 
     df.columns = df.columns.str.strip() + "_" +  df.iloc[0].str.strip() # remove any leading/trailing whitespace
@@ -44,26 +43,21 @@ def plot_data():
     df.drop(columns=['High_AAPL', 'High.1_AMZN', 'High.2_GOOG', 'High.3_META', 'High.4_NFLX', 'Low_AAPL', 'Low.1_AMZN', 'Low.2_GOOG', 'Low.3_META', 'Low.4_NFLX', 'Open_AAPL', 'Open.1_AMZN', 'Open.2_GOOG', 'Open.3_META', 'Open.4_NFLX', 'Volume_AAPL', 'Volume.1_AMZN', 'Volume.2_GOOG', 'Volume.3_META', 'Volume.4_NFLX'], inplace=True)
     df = df.drop(0) 
     df = df.drop(1)# drop first row
-
-    # convert blank data into 0
+    df['Price_Ticker'] = pd.to_datetime(df['Price_Ticker'],format='%Y-%m-%d %H:%M:%S%z').dt.strftime('%Y-%m-%d %H:%M')
+    df.index = df['Price_Ticker']
+    
     column_name = df.shape[1]
     for column_name in df:
         if column_name != 'Price_Ticker':
             df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
-   
-    # plot data using matplotlib
-    plt.figure(figsize=(10, 6))
-    plt.plot(df['Price_Ticker'], df['Close_AAPL'], label='AAPL')
-    plt.plot(df['Price_Ticker'], df['Close.1_AMZN'], label='AMZN')
-    plt.plot(df['Price_Ticker'], df['Close.2_GOOG'], label='GOOG')
-    plt.plot(df['Price_Ticker'], df['Close.3_META'], label='META')
-    plt.plot(df['Price_Ticker'], df['Close.4_NFLX'], label='NFLX')
-    plt.xlabel('Date')
-    plt.ylabel('Closing Price')
-    plt.title('Stock Closing Prices')
-    plt.legend()
-    plt.grid()
-    
+            df[column_name].plot()
+            # plot data using matplotlib
+            plt.xlabel('Date')
+            plt.ylabel('Closing Price')
+            plt.title('Stock Closing Prices')
+            plt.gcf().autofmt_xdate()
+            plt.legend()
+                
     # get file name to save plot in to png
     todaydate = dt.date.today().strftime("%Y%m%d")
     currenttime = dt.datetime.now(dt.timezone.utc).strftime("%H%M%S")
