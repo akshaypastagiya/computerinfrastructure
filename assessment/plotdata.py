@@ -13,6 +13,10 @@
 # To read data from csv file using pandas
 # Refer document
 # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+# To plot the data using pands plot refer document
+# https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html
+# To format the plot using matplotlib py plot refer document
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html
 
 def plot_data():
     # import necessary libraries
