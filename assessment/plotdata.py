@@ -46,7 +46,10 @@ def plot_data():
     df.columns = df.columns.str.strip() + "_" +  df.iloc[0].str.strip()
 
     # Drop the unwanted columns
-    df.drop(columns=['High_AAPL', 'High.1_AMZN', 'High.2_GOOG', 'High.3_META', 'High.4_NFLX', 'Low_AAPL', 'Low.1_AMZN', 'Low.2_GOOG', 'Low.3_META', 'Low.4_NFLX', 'Open_AAPL', 'Open.1_AMZN', 'Open.2_GOOG', 'Open.3_META', 'Open.4_NFLX', 'Volume_AAPL', 'Volume.1_AMZN', 'Volume.2_GOOG', 'Volume.3_META', 'Volume.4_NFLX'], inplace=True)
+    # Get the column name tah needs to be removed
+    removed_col_name = df.columns[df.columns.str.contains("High|Low|Open|Volume",case=True)].to_list()
+    # Removed unwanted columns
+    df.drop(columns=removed_col_name, inplace=True)
     # Drop non required raw
     df = df.drop(0) 
     df = df.drop(1)
@@ -78,3 +81,5 @@ def plot_data():
     # save plot to data folder
     plt.savefig(os.path.join(data_folder, filename))
     plt.close()
+
+plot_data()
