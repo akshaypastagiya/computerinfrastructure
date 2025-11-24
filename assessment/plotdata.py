@@ -66,12 +66,12 @@ def plot_data():
             # Plot the data
             df[column_name].plot()
             # Assign meaningfull knotation to the Plot
-            plt.xlabel('Date')
-            plt.ylabel('Closing Price')
-            plt.title('Stock Closing Prices')
-            plt.legend()
-            # Make Plot to the autofit
-            plt.gcf().autofmt_xdate()        
+    plt.xlabel('Date')
+    plt.ylabel('Closing Price')
+    plt.title('Stock Closing Prices')
+    plt.legend()
+    # Make Plot to the autofit
+    plt.gcf().autofmt_xdate()        
                 
     # get file name to save plot in to png
     todaydate = dt.date.today().strftime("%Y%m%d")
@@ -81,5 +81,3 @@ def plot_data():
     # save plot to data folder
     plt.savefig(os.path.join(data_folder, filename))
     plt.close()
-
-plot_data()
