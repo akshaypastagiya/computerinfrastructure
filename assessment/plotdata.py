@@ -56,7 +56,8 @@ def plot_data():
     # Convet Proce_Ticker Comlumn in to Datatime rquired format.
     df['Price_Ticker'] = pd.to_datetime(df['Price_Ticker'],format='%Y-%m-%d %H:%M:%S%z').dt.strftime('%Y-%m-%d %H:%M')
     df.index = df['Price_Ticker']
-    
+
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=False)
     # Get the column Names
     column_name = df.shape[1]
     for column_name in df:
@@ -64,7 +65,7 @@ def plot_data():
             # Convert data in to numeric value and removed column which have no data
             df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
             # Plot the data
-            df[column_name].plot()
+            df[column_name].plot(ax=ax)
             # Assign meaningfull knotation to the Plot
     plt.xlabel('Date')
     plt.ylabel('Closing Price')

@@ -29,7 +29,7 @@ def get_data():
     import os
 
     # get data from yahoo finance
-    tickers = ["META", "AAPL", "AMZN", "NFLX", "GOOG", "NVDA"]
+    tickers = ["META", "AAPL", "AMZN", "NFLX", "GOOG"]
     df = yf.download(tickers, period="1d", interval="1m",auto_adjust=True)
     # get file name to save data in to csv
     todaydate = dt.date.today().strftime("%Y%m%d")
