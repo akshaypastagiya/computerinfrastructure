@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # called get_data funcction to get data from y finance
 # called plot_data function to plot of the data get from get_data function
 
@@ -9,4 +10,3 @@ get_data()
 
 # call plot_data function to plot of the data get from get_data function
 plot_data()
-
