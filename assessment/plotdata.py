@@ -40,11 +40,11 @@ def plot_data():
 
     # read data from csv file
     df = pd.read_csv(latest_file_path,index_col=0, header=[0,1],parse_dates=True)
-    df.index = pd.to_datetime(df.index, format='%Y-%m-%d %H:%M:%S')
+    # df.index = pd.to_datetime(df.index, format='%Y-%m-%d %H:%M:%S')
 
 
     # plot the data
-    plt.figure(figsize=(10,6))
+    #plt.figure(figsize=(20,6))
     df['Close'].plot()
     plt.xlabel('Date Time')
     plt.ylabel('Closing Price')
