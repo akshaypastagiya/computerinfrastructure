@@ -39,41 +39,18 @@ def plot_data():
     latest_file_path = os.path.join(data_folder, latest_file)
 
     # read data from csv file
-    df = pd.read_csv(latest_file_path)
-    # manuplation data for plotting
-    # Create a  meaningful colums 
-    # Create header by merging the 2 hader in to 1
-    df.columns = df.columns.str.strip() + "_" +  df.iloc[0].str.strip()
+    df = pd.read_csv(latest_file_path,index_col=0, header=[0,1],parse_dates=True)
+    df.index = pd.to_datetime(df.index, format='%Y-%m-%d %H:%M:%S')
 
-    # Drop the unwanted columns
-    # Get the column name tah needs to be removed
-    removed_col_name = df.columns[df.columns.str.contains("High|Low|Open|Volume",case=True)].to_list()
-    # Removed unwanted columns
-    df.drop(columns=removed_col_name, inplace=True)
-    # Drop non required raw
-    df = df.drop(0) 
-    df = df.drop(1)
-    # Convet Proce_Ticker Comlumn in to Datatime rquired format.
-    df['Price_Ticker'] = pd.to_datetime(df['Price_Ticker'],format='%Y-%m-%d %H:%M:%S%z').dt.strftime('%Y-%m-%d %H:%M')
-    df.index = df['Price_Ticker']
 
-    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=False)
-    # Get the column Names
-    column_name = df.shape[1]
-    for column_name in df:
-        if column_name != 'Price_Ticker':
-            # Convert data in to numeric value and removed column which have no data
-            df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
-            # Plot the data
-            df[column_name].plot(ax=ax)
-            # Assign meaningfull knotation to the Plot
-    plt.xlabel('Date')
+    # plot the data
+    plt.figure(figsize=(10,6))
+    df['Close'].plot()
+    plt.xlabel('Date Time')
     plt.ylabel('Closing Price')
     plt.title('Stock Closing Prices')
     plt.legend()
-    # Make Plot to the autofit
-    plt.gcf().autofmt_xdate()        
-                
+                 
     # get file name to save plot in to png
     todaydate = dt.date.today().strftime("%Y%m%d")
     currenttime = dt.datetime.now(dt.timezone.utc).strftime("%H%M%S")
