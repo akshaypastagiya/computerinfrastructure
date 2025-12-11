@@ -36,7 +36,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run faang.py
+      - name: Run assessment/faang.py
         run: python faang.py
 
       - name: Commit and push changes (if any)
@@ -49,4 +49,3 @@ jobs:
           # Commit with a message that tries to avoid triggering other CI systems
           git commit -m "chore: automated run of faang.py [skip ci]" || echo "No changes to commit"
           git push origin HEAD
-          
