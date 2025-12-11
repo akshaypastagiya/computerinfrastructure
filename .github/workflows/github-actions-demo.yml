@@ -37,7 +37,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run faang.py
-        run: /assessment/faang.py
+        run: assessment/faang.py
 
       - name: Commit and push changes (if any)
         run: |
